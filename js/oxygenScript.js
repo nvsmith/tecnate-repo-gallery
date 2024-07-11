@@ -67,3 +67,79 @@ const displayRepos = function (repos) {
     }
     filterInput.classList.remove("hide");
 };
+
+// Listen for click events on the repo list
+githubRepoList.addEventListener("click", function (e) {
+    // Check if the clicked element is an h3 element
+    if (e.target.matches("h3")) {
+        // Get the text content of the clicked h3 element
+        const repoName = e.target.innerText;
+        // Fetch the specific repo info from the GitHub API
+        getRepoInfo(repoName);
+    }
+});
+
+// Fetch a specific repository's info
+const getRepoInfo = async function (repoName) {
+    const fetchInfo = await fetch(
+        `https://api.github.com/repos/${username}/${repoName}`
+    );
+    const repoInfo = await fetchInfo.json();
+    // console.log(repoInfo);
+    // Get info about languages
+    const fetchLanguages = await fetch(repoInfo.languages_url);
+    const languageData = await fetchLanguages.json();
+
+    // Make a list of languages
+    const languages = [];
+    for (const language in languageData) {
+        languages.push(language);
+    }
+
+    displayRepoInfo(repoInfo, languages);
+};
+
+// Display a specific repository's info
+const displayRepoInfo = function (repoInfo, languages) {
+    reposContainer.classList.add("hide"); // Hide the repository gallery
+    repoDataContainer.innerHTML = ""; // Empty the repo data container
+    repoDataContainer.classList.remove("hide"); // Show the repo data container
+    viewReposButton.classList.remove("hide"); // Unhide the "Back to Repo Gallery" button
+
+    // Create HTML elements to display the repo info
+    const div = document.createElement("div");
+    div.innerHTML = `
+        <h3>Name: ${repoInfo.name}</h3>
+        <p>Description: ${repoInfo.description}</p>
+        <p>Default Branch: ${repoInfo.default_branch}</p>
+        <p>Languages: ${languages.join(", ")}</p>
+        <a class="visit" href="${
+            repoInfo.html_url
+        }" target="_blank" rel="noreferrer noopener">View Repo on GitHub!</a>
+        `;
+    repoDataContainer.append(div);
+    repoDataContainer.append(viewReposButton); // Add the "Back to Repo Gallery" back to HTML
+};
+
+// Listen for click events on the "Back to Repo Gallery" button
+viewReposButton.addEventListener("click", function () {
+    reposContainer.classList.remove("hide"); // Show the repository gallery
+    repoDataContainer.classList.add("hide"); // Hide the repo data container
+    viewReposButton.classList.add("hide"); // Hide the "Back to Repo Gallery" button
+});
+
+// Dynamic search
+filterInput.addEventListener("input", function (e) {
+    const searchText = e.target.value;
+    const repos = document.querySelectorAll(".repo");
+    const searchLowerText = searchText.toLowerCase();
+
+    for (const repo of repos) {
+        const repoLowerText = repo.innerText.toLowerCase();
+        if (repoLowerText.includes(searchLowerText)) {
+            repo.classList.remove("hide");
+        } else {
+            repo.classList.add("hide");
+        }
+    }
+});
