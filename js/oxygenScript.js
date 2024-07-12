@@ -73,16 +73,16 @@ const displayRepos = function (repos) {
     for (const repo of repos) {
         const repoItem = document.createElement("li");
         repoItem.classList.add("repo");
-        repoItem.innerHTML = `<h3>${repo.name}</h3>`;
+        repoItem.innerHTML = `<h4>${repo.name}</h4>`;
         githubRepoList.append(repoItem);
     }
 };
 
 // Listen for click events on the repo list
 githubRepoList.addEventListener("click", function (e) {
-    // Check if the clicked element is an h3 element
-    if (e.target.matches("h3")) {
-        // Get the text content of the clicked h3 element
+    // Check if the clicked element is an h4 element
+    if (e.target.matches("h4")) {
+        // Get the text content of the clicked h4 element
         const repoName = e.target.innerText;
         // Fetch the specific repo info from the GitHub API
         getRepoInfo(repoName);
@@ -130,7 +130,7 @@ const displayRepoInfo = function (repoInfo, languages) {
 
     // const div = document.createElement("div");
     // div.innerHTML = `
-    //     <h3>Name: ${repoInfo.name}</h3>
+    //     <h4>Name: ${repoInfo.name}</h4>
     //     <p>Description: ${repoInfo.description}</p>
     //     <p>Default Branch: ${repoInfo.default_branch}</p>
     //     <p>Languages: ${languages.join(", ")}</p>

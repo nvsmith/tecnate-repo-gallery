@@ -1,4 +1,85 @@
-.span__user-info {
-    font-size: 1rem;
+/*
+The Code Block - GitHub Repo Gallery manages: 
+- all scripting functionality for the GitHub API.
+- all CSS that is specific to the Gallery and Repo Info function/style (i.e., for any JS-generated DOM elements).
+
+Elements that could be created/styed via the Oxygen UI were styled directly on said element. (Note: the Repo Info section has a "hide" class applied by default)
+
+Any custom HTML elements that could not be created directly via Oxygen were created in their own code blocks where relevant to the layout; but CSS is all managed within this code block to consolidate styles.
+*/
+
+/*** Search Filter Layout ***/
+#filter-input-wrapper {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+#filter-input {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 1rem;
+    border: 2px solid #033c54;
+}
+
+#filter-input:focus {
+    border: 4px solid #ff8f70;
+}
+
+/*** Gallery Layout ***/
+#repos-container {
+    width: 100%;
+}
+
+#repo-list {
+    gap: 2rem;
+    grid-template-columns: repeat(3, 1fr);
+    display: grid;
+    padding: 0.5rem;
+    list-style-type: none;
+}
+
+.repo {
+    padding: 0.5rem;
+    border: 1px solid #adadad;
+}
+
+.repo h4 {
+    display: flex;
+    align-items: center;
+    min-height: 5.5rem;
+    padding: 0.5rem;
+    background-color: rgba(255, 143, 112, 0.33);
+}
+
+.repo h4:hover {
+    color: white;
+    cursor: pointer;
+    background-color: #ff8f70;
+}
+
+/*** Section Text Styles ***/
+.span__user-info,
+.span__repo-info {
     font-weight: normal;
+    font-size: 1rem;
+}
+
+/*** Responsive Gallery Layout ***/
+
+@media (max-width: 992px) {
+    #repo-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    #repo-list {
+        gap: 1.2rem;
+        grid-template-columns: 1fr;
+    }
+    .repo h4 {
+        min-height: 3rem;
+    }
 }
