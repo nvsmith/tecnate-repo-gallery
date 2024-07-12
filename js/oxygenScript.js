@@ -9,12 +9,20 @@ const githubLocation = document.querySelector("#github-location");
 const githubPublicRepos = document.querySelector("#github-public-repos");
 
 // Repository Gallery DOM Elements
+const gallery = document.querySelector("#gallery"); // section element to display repository gallery
 const reposContainer = document.querySelector("#repos-container"); // div element containing all repositories
 const filterInput = document.querySelector("#filter-input"); // input element to search repositories
 const githubRepoList = document.querySelector("#repo-list"); // ul element to display repositories
 
 // Specific Repository DOM Elements
+const repoInfoSection = document.querySelector("#repo-info"); // Section to display info about a specific repository
 const repoDataContainer = document.querySelector("#repo-data-container"); // div element to display a specific repository info
+const githubRepoName = document.querySelector("#github-repo-name"); // heading element to display repo name
+const githubRepoDescription = document.querySelector(
+    "#github-repo-description"
+); // heading element to display repo description
+const githubRepoLanguages = document.querySelector("#github-repo-languages"); // heading element to display languages
+const viewOnGithubButton = document.querySelector("#view-on-github"); // button element to view repo on GitHub
 const viewReposButton = document.querySelector("#view-repos"); // button element to return to repository gallery
 
 // Fetch user info from GitHub API
@@ -56,8 +64,11 @@ const gitRepos = async function () {
     displayRepos(repoData);
 };
 
-// Display repositories on the page
+// Display all repositories on the page
 const displayRepos = function (repos) {
+    gallery.classList.remove("hide"); // Show the gallery section
+    filterInput.classList.remove("hide"); // Show the search/filter input
+
     // Loop through the repositories and display them on the page
     for (const repo of repos) {
         const repoItem = document.createElement("li");
@@ -65,7 +76,6 @@ const displayRepos = function (repos) {
         repoItem.innerHTML = `<h3>${repo.name}</h3>`;
         githubRepoList.append(repoItem);
     }
-    filterInput.classList.remove("hide");
 };
 
 // Listen for click events on the repo list
@@ -101,31 +111,50 @@ const getRepoInfo = async function (repoName) {
 
 // Display a specific repository's info
 const displayRepoInfo = function (repoInfo, languages) {
-    reposContainer.classList.add("hide"); // Hide the repository gallery
+    gallery.classList.add("hide"); // Hide the gallery section
+    repoInfoSection.classList.remove("hide"); // Show the repo info section
+    // reposContainer.classList.add("hide"); // Hide the repository gallery
     repoDataContainer.innerHTML = ""; // Empty the repo data container
-    repoDataContainer.classList.remove("hide"); // Show the repo data container
-    viewReposButton.classList.remove("hide"); // Unhide the "Back to Repo Gallery" button
+    // repoDataContainer.classList.remove("hide"); // Show the repo data container
+    // viewReposButton.classList.remove("hide"); // Unhide the "Back to Repo Gallery" button
 
-    // Create HTML elements to display the repo info
-    const div = document.createElement("div");
-    div.innerHTML = `
-        <h3>Name: ${repoInfo.name}</h3>
-        <p>Description: ${repoInfo.description}</p>
-        <p>Default Branch: ${repoInfo.default_branch}</p>
-        <p>Languages: ${languages.join(", ")}</p>
-        <a class="visit" href="${
-            repoInfo.html_url
-        }" target="_blank" rel="noreferrer noopener">View Repo on GitHub!</a>
-        `;
-    repoDataContainer.append(div);
+    // Set the innerHTML of DOM elements to display the repo's info
+    githubRepoName.innerHTML = `Repo Name: <span class="span__repo-info">${repoInfo.name}</span>`;
+    githubRepoDescription.innerHTML = `Description: <span class="span__repo-info">${repoInfo.description}</span>`;
+    githubRepoLanguages.innerHTML = `Languages: <span class="span__repo-info">${languages.join(
+        ", "
+    )}</span>`;
+
+    // Set the href attribute of the "View on GitHub" button
+    viewOnGithubButton.setAttribute("href", repoInfo.html_url);
+
+    // const div = document.createElement("div");
+    // div.innerHTML = `
+    //     <h3>Name: ${repoInfo.name}</h3>
+    //     <p>Description: ${repoInfo.description}</p>
+    //     <p>Default Branch: ${repoInfo.default_branch}</p>
+    //     <p>Languages: ${languages.join(", ")}</p>
+    //     <a class="visit" href="${
+    //         repoInfo.html_url
+    //     }" target="_blank" rel="noreferrer noopener">View Repo on GitHub!</a>
+    //     `;
+    // repoDataContainer.append(div);
+
+    // Append the innerHTML elements within the repo data container
+    repoDataContainer.append(githubRepoName);
+    repoDataContainer.append(githubRepoDescription);
+    repoDataContainer.append(githubRepoLanguages);
     repoDataContainer.append(viewReposButton); // Add the "Back to Repo Gallery" back to HTML
+    repoDataContainer.append(viewOnGithubButton); // Add the "View on GitHub" back to HTML
 };
 
 // Listen for click events on the "Back to Repo Gallery" button
 viewReposButton.addEventListener("click", function () {
-    reposContainer.classList.remove("hide"); // Show the repository gallery
-    repoDataContainer.classList.add("hide"); // Hide the repo data container
-    viewReposButton.classList.add("hide"); // Hide the "Back to Repo Gallery" button
+    repoInfoSection.classList.add("hide"); // Hide the repo info section
+    gallery.classList.remove("hide"); // Show the gallery section
+    // reposContainer.classList.remove("hide"); // Show the repository gallery
+    // repoDataContainer.classList.add("hide"); // Hide the repo data container
+    // viewReposButton.classList.add("hide"); // Hide the "Back to Repo Gallery" button
 });
 
 // Dynamic search
