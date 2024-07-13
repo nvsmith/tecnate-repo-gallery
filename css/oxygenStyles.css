@@ -6,12 +6,16 @@ The Code Block - GitHub Repo Gallery manages:
 Elements that could be created/styed via the Oxygen UI were styled directly on said element. (Note: the Repo Info section has a "hide" class applied by default)
 
 Any custom HTML elements that could not be created directly via Oxygen were created in their own code blocks where relevant to the layout; but CSS is all managed within this code block to consolidate styles.
+
+Use this stylesheet for development; minify this document and import the minified version to the site for best performance.
+
+CSS Minifier: https://www.toptal.com/developers/cssminifier
 */
 
 /*** Search Filter Layout ***/
 #filter-input-wrapper {
     width: 100%;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
 }
 
 #filter-input {
@@ -36,7 +40,7 @@ Any custom HTML elements that could not be created directly via Oxygen were crea
     gap: 2rem;
     grid-template-columns: repeat(3, 1fr);
     display: grid;
-    padding: 0.5rem;
+    padding: 0 0 3rem 0;
     list-style-type: none;
 }
 

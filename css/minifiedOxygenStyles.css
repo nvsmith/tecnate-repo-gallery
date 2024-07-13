@@ -1,0 +1,60 @@
+#filter-input-wrapper {
+    width: 100%;
+    margin-bottom: 2rem;
+}
+#filter-input {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 1rem;
+    border: 2px solid #033c54;
+}
+#filter-input:focus {
+    border: 4px solid #ff8f70;
+}
+#repos-container {
+    width: 100%;
+}
+#repo-list {
+    gap: 2rem;
+    grid-template-columns: repeat(3, 1fr);
+    display: grid;
+    padding: 0 0 3rem;
+    list-style-type: none;
+}
+.repo {
+    padding: 0.5rem;
+    border: 1px solid #adadad;
+}
+.repo h4 {
+    display: flex;
+    align-items: center;
+    min-height: 5.5rem;
+    padding: 0.5rem;
+    background-color: rgba(255, 143, 112, 0.33);
+}
+.repo h4:hover {
+    color: #fff;
+    cursor: pointer;
+    background-color: #ff8f70;
+}
+.span__repo-info,
+.span__user-info {
+    font-weight: 400;
+    font-size: 1rem;
+}
+@media (max-width: 992px) {
+    #repo-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 768px) {
+    #repo-list {
+        gap: 1.2rem;
+        grid-template-columns: 1fr;
+    }
+    .repo h4 {
+        min-height: 3rem;
+    }
+}
