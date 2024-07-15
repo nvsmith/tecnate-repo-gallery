@@ -78,10 +78,13 @@ const getRepoInfo = async function (e) {
             repoDataContainer.append(viewReposButton),
             repoDataContainer.append(viewOnGithubButton);
     };
-viewReposButton.addEventListener("click", function () {
-    repoInfoSection.classList.add("hide"), gallery.classList.remove("hide");
+viewReposButton.addEventListener("click", function (e) {
+    e.preventDefault(),
+        repoInfoSection.classList.add("hide"),
+        gallery.classList.remove("hide");
 }),
     filterInput.addEventListener("input", function (e) {
+        e.preventDefault();
         let t = e.target.value,
             i = document.querySelectorAll(".repo"),
             n = t.toLowerCase();

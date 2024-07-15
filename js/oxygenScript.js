@@ -136,13 +136,15 @@ const displayRepoInfo = function (repoInfo, languages) {
 };
 
 // Listen for click events on the "Back to Repo Gallery" button
-viewReposButton.addEventListener("click", function () {
+viewReposButton.addEventListener("click", function (e) {
+    e.preventDefault(); // Prevent browser from trying to redirect to a new URL
     repoInfoSection.classList.add("hide"); // Hide the repo info section
     gallery.classList.remove("hide"); // Show the gallery section
 });
 
 // Dynamic search
 filterInput.addEventListener("input", function (e) {
+    e.preventDefault(); // Prevent form submission
     const searchText = e.target.value;
     const repos = document.querySelectorAll(".repo");
     const searchLowerText = searchText.toLowerCase();
